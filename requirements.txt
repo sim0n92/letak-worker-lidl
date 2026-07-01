@@ -1,0 +1,3 @@
+# Runtime dependencies for letak-worker-lidl.
+# The protocol wrapper in src/main.py and the parser in src/lidl.py use only
+# the Python standard library.

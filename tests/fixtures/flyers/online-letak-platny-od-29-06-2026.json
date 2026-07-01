@@ -1,0 +1,30 @@
+{
+  "self": "v4/flyer?flyer_identifier=online-letak-platny-od-29-06-2026&region_id=0",
+  "version": 4,
+  "success": true,
+  "message": "Requested Flyer found.",
+  "dateTime": "2026-07-01T20:14:17+00:00",
+  "numberOfEntries": 1,
+  "flyer": {
+    "id": "019f03a4-9a67-7cf5-89ad-2aa9ff174dfc",
+    "name": "Aktuálny leták",
+    "title": "Platný od 29. 06. 2026",
+    "locale": "sk-SK",
+    "clientLocale": "lidl/sk-SK",
+    "apiCountryCode": "SK",
+    "countryCode": "SK",
+    "category": "SK Category",
+    "subcategory": "Letáky",
+    "isActive": true,
+    "enableDownload": true,
+    "pdfUrl": "https://object.storage.eu01.onstackit.cloud/leaflets/pdfs/019f03a4-9a67-7cf5-89ad-2aa9ff174dfc/Aktualny-letak-Platny-od-29-06-2026-01.pdf",
+    "hiResPdfUrl": "https://object.storage.eu01.onstackit.cloud/leaflets/pdfs/019f03a4-9a67-7cf5-89ad-2aa9ff174dfc/Aktualny-letak-Platny-od-29-06-2026-01.pdf",
+    "fileSize": 87844158,
+    "flyerUrlAbsolute": "https://www.lidl.sk/l/sk/letak/online-letak-platny-od-29-06-2026/ar/0",
+    "startDate": "2026-06-26",
+    "endDate": "2026-07-05",
+    "offerStartDate": "2026-06-29",
+    "offerEndDate": "2026-07-05",
+    "status": "current"
+  }
+}

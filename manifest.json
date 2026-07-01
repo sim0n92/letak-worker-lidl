@@ -1,0 +1,126 @@
+{
+  "$schema": "https://example.com/process-class-manifest-v1.schema.json",
+  "specVersion": "1.0",
+  "type": "stdin",
+  "name": "letak-worker-lidl",
+  "version": "0.1.0",
+  "description": "Detects Lidl leaflets under the 'Letaky' listing section and returns new leaflet URLs.",
+  "author": "Fancysoft / 0ics",
+  "repository": "https://github.com/sim0n92/letak-worker-lidl",
+  "authentication": false,
+  "actions": {
+    "execute": {
+      "description": "Parse the Lidl leaflet listing page (and the per-leaflet flyer API for validity/PDF) and return leaflets that are not already known.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "outputPath": {
+            "type": "string",
+            "description": "Absolute path where the full result JSON should be written."
+          },
+          "knownLeaflets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "Leaflet keys already seen, each formatted as 'type|from|to' (e.g. 'Aktualny letak|2026-06-29|2026-07-05'). Any leaflet whose key is not in this list is reported as new."
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "description": "Optional case-insensitive leaflet-type filter (e.g. ['Aktualny letak']). When set, only leaflets of these types are returned; empty or absent means all types. Combined with knownLeaflets: a leaflet is returned only when it matches a type AND is new."
+          },
+          "pageUrl": {
+            "type": "string",
+            "description": "Override for the leaflet listing page URL. Defaults to https://www.lidl.sk/c/online-letak/s10008489"
+          },
+          "flyerApiUrl": {
+            "type": "string",
+            "description": "Override for the per-leaflet flyer-detail API base URL (validity + PDF link). Defaults to https://endpoints.leaflets.schwarz/v4/flyer. May contain a literal '{identifier}' placeholder (used by tests to point at local fixtures) instead of query params."
+          },
+          "customData": {
+            "type": "object",
+            "description": "Optional source-specific hints passed through from the scanner/orchestrator.",
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "outputPath"
+        ]
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "outputPath": {
+            "type": "string",
+            "description": "Path to the written result JSON."
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of returned leaflets (new AND matching the type filter)."
+          },
+          "hasNew": {
+            "type": "boolean",
+            "description": "True when at least one matching new leaflet was found."
+          },
+          "leaflets": {
+            "type": "array",
+            "description": "Matched leaflets (new AND of a requested type), each a downloadable PDF entry.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Leaflet type (e.g. 'Aktualny letak', 'Online magazin'). Part of the novelty key."
+                },
+                "from": {
+                  "type": "string",
+                  "description": "Validity start date (YYYY-MM-DD)."
+                },
+                "to": {
+                  "type": "string",
+                  "description": "Validity end date (YYYY-MM-DD)."
+                },
+                "url": {
+                  "type": "string",
+                  "description": "Directly downloadable PDF URL."
+                }
+              },
+              "required": ["url"]
+            }
+          },
+          "fileSize": {
+            "type": "integer",
+            "description": "Size of the result JSON in bytes."
+          }
+        }
+      }
+    },
+    "terminate": {
+      "description": "Cancel a running scrape and clean up resources.",
+      "input": {
+        "type": "object",
+        "properties": {}
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "cleaned": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  },
+  "execution": {
+    "timeout": 120,
+    "cpuRequest": "100m",
+    "cpuLimit": "1",
+    "memoryRequest": "128Mi",
+    "memoryLimit": "256Mi"
+  }
+}
