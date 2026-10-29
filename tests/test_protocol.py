@@ -151,6 +151,16 @@ def main() -> int:
         p = run(payload, log_dir=log_dir)
         check("fetch failure -> exit 4", p.returncode == 4, f"rc={p.returncode}")
 
+        # a listing without leaflet tiles (layout changed) -> NO_LEAFLETS, exit 4 -- not an empty success
+        empty = Path(tmp) / "empty.html"
+        empty.write_text("<html><body>redesigned page</body></html>", encoding="utf-8")
+        payload = json.dumps({"_action": "execute", "outputPath": out_file, "pageUrl": empty.as_uri(),
+                              "flyerApiUrl": flyer_api})
+        p = run(payload, log_dir=log_dir)
+        last = [json.loads(l) for l in p.stdout.splitlines() if l.strip()][-1]
+        check("no leaflets -> exit 4 NO_LEAFLETS", p.returncode == 4 and last.get("code") == "NO_LEAFLETS",
+              f"rc={p.returncode} {last}")
+
     print("\n" + ("All tests passed" if failures == 0 else f"{failures} test(s) failed"))
     return 1 if failures else 0
 
