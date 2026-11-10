@@ -77,10 +77,10 @@ def input_problem(input_data: dict[str, Any]) -> str | None:
 
 
 def build_run_result(found: list[dict], types: set[str], state_in: dict | None,
-                     key_fn: Callable[[str, str, str], str]) -> dict[str, Any]:
+                     key_of: Callable[[dict], str]) -> dict[str, Any]:
     seen = list((state_in or {}).get("seen") or [])
     known = set(seen)
-    keyed = [(it, key_fn(it["type"], it["from"], it["to"])) for it in found]
+    keyed = [(it, key_of(it)) for it in found]
     new = [(it, k) for it, k in keyed if k not in known and (not types or (it["type"] or "").lower() in types)]
     seen_out = (seen + [k for _, k in keyed if k not in known])[-SEEN_LIMIT:]
     return {
