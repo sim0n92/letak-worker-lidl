@@ -1,0 +1,27 @@
+{
+  "result": {
+    "count": 1,
+    "hasNew": true,
+    "leaflets": [
+      {
+        "type": "Online magazín",
+        "from": "2026-06-22",
+        "to": "2026-07-05",
+        "url": "https://object.storage.eu01.onstackit.cloud/leaflets/pdfs/019ecb59-50cc-7729-b9d6-8e8b35f9af36/Online-magazin-Platny-od-22-06-2026-00.pdf"
+      }
+    ]
+  },
+  "fileDoc": {
+    "types": null,
+    "hasNew": true,
+    "count": 1,
+    "leaflets": [
+      {
+        "type": "Online magazín",
+        "from": "2026-06-22",
+        "to": "2026-07-05",
+        "url": "https://object.storage.eu01.onstackit.cloud/leaflets/pdfs/019ecb59-50cc-7729-b9d6-8e8b35f9af36/Online-magazin-Platny-od-22-06-2026-00.pdf"
+      }
+    ]
+  }
+}
